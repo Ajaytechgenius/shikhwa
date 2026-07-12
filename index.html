@@ -9,82 +9,85 @@
     justify-content:center;
     height:100vh;
     font-family:'Manrope', sans-serif;
+    gap: 24px;
   }
 
-  .duo-btn{
+  .wipe-btn{
     position: relative;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    padding: 18px 40px;
+    padding: 18px 42px;
     border-radius: 100px;
-    background: #e8c579; /* your gold-bright */
-    color: #0b0c0f;
+    background: #e8c579;
+    border:none;
+    cursor:pointer;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  /* thin chromatic fringe — trails just behind the wipe edge */
+  .wipe-btn .fringe{
+    position:absolute;
+    inset:0;
+    clip-path: circle(0% at var(--x,50%) var(--y,50%));
+    background: conic-gradient(from 90deg,
+      rgba(120,190,255,0.9),
+      rgba(232,197,121,0.9),
+      rgba(255,140,200,0.9),
+      rgba(120,190,255,0.9));
+    filter: blur(3px) saturate(1.4);
+    transition: clip-path 0.65s cubic-bezier(0.22,1,0.36,1);
+    z-index:1;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+
+  /* crisp black wipe — slightly delayed/smaller than fringe so fringe peeks out at edge */
+  .wipe-btn .fill{
+    position:absolute;
+    inset:0;
+    clip-path: circle(0% at var(--x,50%) var(--y,50%));
+    background: #0b0c0f;
+    transition: clip-path 0.6s cubic-bezier(0.22,1,0.36,1) 0.03s;
+    z-index:2;
+  }
+
+  .wipe-btn:hover .fringe{ clip-path: circle(145% at var(--x,50%) var(--y,50%)); }
+  .wipe-btn:hover .fill{ clip-path: circle(140% at var(--x,50%) var(--y,50%)); }
+
+  .wipe-btn span.label{
+    position:relative;
+    z-index:3;
+    color:#0b0c0f;
     font-weight:700;
     font-size:15px;
-    text-decoration:none;
-    overflow: hidden;
-    isolation: isolate;
-    cursor:pointer;
-    border:none;
+    transition: color 0.45s ease;
   }
-
-  /* the expanding black circle */
-  .duo-btn::before{
-    content:'';
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:20px;
-    height:20px;
-    background:#0b0c0f;
-    border-radius:50%;
-    transform: translate(-50%,-50%) scale(0);
-    transition: transform 0.55s cubic-bezier(0.65,0,0.35,1);
-    z-index:1;
-  }
-
-  /* the blurred glow that trails the wipe edge */
-  .duo-btn::after{
-    content:'';
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:20px;
-    height:20px;
-    background: radial-gradient(circle, rgba(232,197,121,0.9) 0%, transparent 70%);
-    filter: blur(14px);
-    transform: translate(-50%,-50%) scale(0);
-    transition: transform 0.55s cubic-bezier(0.65,0,0.35,1) 0.05s, opacity 0.55s ease 0.3s;
-    z-index:1;
-    opacity:0;
-  }
-
-  .duo-btn span{
-    position:relative;
-    z-index:2;
-    transition: color 0.4s ease 0.15s;
-  }
-
-  .duo-btn:hover::before{
-    transform: translate(-50%,-50%) scale(15);
-  }
-
-  .duo-btn:hover::after{
-    transform: translate(-50%,-50%) scale(18);
-    opacity:1;
-  }
-
-  .duo-btn:hover span{
-    color: #e8c579;
-  }
+  .wipe-btn:hover span.label{ color:#e8c579; }
 </style>
 </head>
 <body>
 
-<button class="duo-btn">
-  <span>Open App</span>
+<button class="wipe-btn">
+  <span class="fringe"></span>
+  <span class="fill"></span>
+  <span class="label">Open App</span>
 </button>
+
+<script>
+document.querySelectorAll('.wipe-btn').forEach(btn=>{
+  function setOrigin(e){
+    const r = btn.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    btn.style.setProperty('--x', x + '%');
+    btn.style.setProperty('--y', y + '%');
+  }
+  btn.addEventListener('mouseenter', setOrigin);
+  btn.addEventListener('mouseleave', setOrigin);
+});
+</script>
 
 </body>
 </html>
