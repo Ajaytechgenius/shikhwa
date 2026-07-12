@@ -317,18 +317,32 @@ section{ padding:130px 0; }
 
 .index-row{ display:grid; grid-template-columns: 60px 1fr 1.3fr; gap:32px; align-items:start; padding: 36px 0; border-top: 1px solid var(--line); }
 .index-row:last-child{ border-bottom: 1px solid var(--line); }
-.index-num{ font-family:'Fraunces', serif; font-size:14px; color: var(--green-deep); padding-top:6px; font-weight:600; }
-.index-title{ font-size:22px; font-weight:500; color: var(--ink); }
-.index-desc{ color: var(--muted); font-size:14px; line-height:1.75; }
+.index-num{ font-family:'Fraunces', serif; font-size:14px; color: var(--green-deep); padding-top:8px; font-weight:600; }
+.index-title{
+  font-family:'Fraunces', serif;
+  font-size:26px;
+  font-weight:400;
+  letter-spacing:-0.015em;
+  color: var(--ink);
+}
+.index-desc{ color: var(--muted); font-size:14px; line-height:1.75; padding-top:4px; }
 @media (max-width:760px){ .index-row{ grid-template-columns:1fr; gap:10px; } }
 
 .subject-block{ display:grid; grid-template-columns: 0.5fr 1.5fr; gap:40px; padding: 48px 0; border-top:1px solid var(--line); align-items:center; }
 .subject-block:last-child{ border-bottom:1px solid var(--line); }
 .subject-tag-num{ font-family:'Fraunces', serif; font-style:italic; font-size:15px; color: var(--muted); }
 .subject-tag-num strong{
-  color: #fff; background: var(--deep); font-style:normal; display:inline-block;
-  font-size:10px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:10px;
-  font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; padding:6px 14px; border-radius:100px;
+  color: var(--green-deep);
+  background: none;
+  font-style:normal;
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;
+  padding:0;
 }
 .subject-title{ font-size:clamp(24px,2.6vw,32px); margin-bottom:10px; color: var(--ink); }
 .subject-desc{ color: var(--muted); font-size:14px; line-height:1.75; max-width:520px; }
@@ -355,15 +369,30 @@ section{ padding:130px 0; }
 .price-panel::before{ content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background: var(--green); border-radius:0 0 4px 4px; }
 .price-panel h3{ font-size: clamp(26px,3vw,34px); margin-bottom:18px; color: var(--ink); }
 .price-panel p{ color: var(--muted); font-size:14px; line-height:1.8; max-width:480px; margin:0 auto 36px; }
-.price-tags{ display:flex; justify-content:center; gap:14px; margin-bottom:40px; flex-wrap:wrap; }
+.price-tags{
+  display:flex; justify-content:center; align-items:center;
+  gap:14px; margin-bottom:40px; flex-wrap:wrap;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+  color: var(--muted); font-weight:700;
+}
+.price-tags span.sep{ color: var(--green-deep); font-weight:400; }
 
 .faq-row{ border-top:1px solid var(--line); }
 .faq-row:last-child{ border-bottom:1px solid var(--line); }
 .faq-head{ display:flex; justify-content:space-between; align-items:center; padding: 28px 0; cursor:pointer; }
 .faq-head .q-num{ color: var(--green-deep); font-family:'Fraunces', serif; font-size:13px; margin-right:22px; }
 .faq-head .q-text{ font-size:16px; font-weight:500; flex:1; color: var(--ink); }
-.faq-head .q-icon{ font-size:20px; color:var(--muted); transition: transform 0.35s ease; }
-.faq-row.active .q-icon{ transform: rotate(45deg); color:var(--green-deep); }
+.q-icon{ position:relative; width:18px; height:18px; flex-shrink:0; margin-left:20px; }
+.q-icon .icon-line{
+  position:absolute;
+  background: var(--muted);
+  border-radius:2px;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.35s ease;
+}
+.q-icon .icon-line.h{ top:50%; left:0; width:100%; height:1.5px; transform:translateY(-50%); }
+.q-icon .icon-line.v{ left:50%; top:0; width:1.5px; height:100%; transform:translateX(-50%); }
+.faq-row.active .q-icon .icon-line{ background: var(--green-deep); }
+.faq-row.active .q-icon .icon-line.v{ transform: translateX(-50%) scaleY(0); }
 .faq-body{ max-height:0; overflow:hidden; transition: max-height 0.45s ease; }
 .faq-row.active .faq-body{ max-height:200px; }
 .faq-body p{ color:var(--muted); font-size:14px; line-height:1.75; padding: 0 0 30px 42px; max-width:600px; }
@@ -552,9 +581,9 @@ footer{ border-top:1px solid var(--line); padding: 50px 6% 120px; display:flex; 
       <h3>Fair pricing, no surprises</h3>
       <p>Rates depend on whether it's school-level or JEE/NEET preparation, and how many sessions you need weekly. Message directly for exact numbers.</p>
       <div class="price-tags">
-        <span class="chip">FREE TRIAL CLASS</span>
-        <span class="chip">FLEXIBLE SCHEDULING</span>
-        <span class="chip">NO LOCK-IN</span>
+        <span>Free Trial Class</span><span class="sep">·</span>
+        <span>Flexible Scheduling</span><span class="sep">·</span>
+        <span>No Lock-in</span>
       </div>
       <a href="#contact" class="btn-fill">
         <span class="fill"></span>
@@ -567,12 +596,12 @@ footer{ border-top:1px solid var(--line); padding: 50px 6% 120px; display:flex; 
 <section id="faq">
   <div class="wrap">
     <div class="section-top reveal"><h2>Questions, answered</h2></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">01</span><span class="q-text">Is this online or in-person?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Both are available in Sikar — message me and we'll figure out what fits your location and schedule best.</p></div></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">02</span><span class="q-text">Hindi, English, or both?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Whatever helps concepts click fastest for you — most sessions naturally mix both.</p></div></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">03</span><span class="q-text">Can a student really teach this well?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Being closer to the exam means I explain things the way I actually needed them explained — often simpler than a textbook approach.</p></div></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">04</span><span class="q-text">What if I miss a class?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Message in advance where possible and we'll reschedule. Consistency matters more than rigid rules.</p></div></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">05</span><span class="q-text">Board exams and JEE/NEET together?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Yes — the overlap is real. We can balance both or focus on one, depending on your timeline.</p></div></div>
-    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">06</span><span class="q-text">Is the free trial actually free?</span><span class="q-icon">+</span></div><div class="faq-body"><p>Completely, no obligation. It's the fairest way for you to know if this works before spending anything.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">01</span><span class="q-text">Is this online or in-person?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Both are available in Sikar — message me and we'll figure out what fits your location and schedule best.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">02</span><span class="q-text">Hindi, English, or both?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Whatever helps concepts click fastest for you — most sessions naturally mix both.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">03</span><span class="q-text">Can a student really teach this well?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Being closer to the exam means I explain things the way I actually needed them explained — often simpler than a textbook approach.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">04</span><span class="q-text">What if I miss a class?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Message in advance where possible and we'll reschedule. Consistency matters more than rigid rules.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">05</span><span class="q-text">Board exams and JEE/NEET together?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Yes — the overlap is real. We can balance both or focus on one, depending on your timeline.</p></div></div>
+    <div class="faq-row reveal"><div class="faq-head"><span class="q-num">06</span><span class="q-text">Is the free trial actually free?</span><span class="q-icon"><span class="icon-line h"></span><span class="icon-line v"></span></span></div><div class="faq-body"><p>Completely, no obligation. It's the fairest way for you to know if this works before spending anything.</p></div></div>
   </div>
 </section>
 
@@ -621,20 +650,62 @@ footer{ border-top:1px solid var(--line); padding: 50px 6% 120px; display:flex; 
 </div>
 
 <script>
-/* ===== THEME SYSTEM ===== */
+/* =========================================================
+   THEME SYSTEM — synced to visitor's local time (timezone-aware)
+   Auto mode: 6:00–17:59 local time = light, else dark.
+   Manual toggle overrides auto mode and is remembered;
+   auto mode resumes only if the user hasn't manually chosen.
+========================================================= */
 const root = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
-let currentTheme = localStorage.getItem('sikhwa-theme') || 'light';
+const THEME_KEY = 'sikhwa-theme';
+const AUTO_KEY = 'sikhwa-theme-auto';
+let currentTheme;
 
-function applyTheme(theme){
-  root.setAttribute('data-theme', theme);
-  localStorage.setItem('sikhwa-theme', theme);
-  currentTheme = theme;
+function getAutoTheme(){
+  const hour = new Date().getHours(); // uses visitor's local device time/timezone
+  return (hour >= 6 && hour < 18) ? 'light' : 'dark';
 }
-applyTheme(currentTheme);
+
+function applyTheme(theme, manual = false){
+  root.setAttribute('data-theme', theme);
+  currentTheme = theme;
+  if(manual){
+    localStorage.setItem(THEME_KEY, theme);
+    localStorage.setItem(AUTO_KEY, 'false');
+  }
+}
+
+(function initTheme(){
+  const isAuto = localStorage.getItem(AUTO_KEY) !== 'false';
+  applyTheme(isAuto ? getAutoTheme() : (localStorage.getItem(THEME_KEY) || getAutoTheme()));
+})();
 
 themeToggle.addEventListener('click', ()=>{
-  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark', true);
+});
+
+/* keep syncing live with real time, only while in auto mode */
+setInterval(()=>{
+  if(localStorage.getItem(AUTO_KEY) !== 'false'){
+    const auto = getAutoTheme();
+    if(auto !== currentTheme) applyTheme(auto);
+  }
+}, 60000);
+
+/* =========================================================
+   BASIC DEV-TOOLS / INSPECT DETERRENTS
+   (Note: browsers always allow devtools via their own menu —
+   this only blocks the common shortcuts & right-click.)
+========================================================= */
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  const key = e.key.toUpperCase();
+  const blocked =
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && (key === 'I' || key === 'J' || key === 'C')) ||
+    (e.ctrlKey && key === 'U');
+  if(blocked) e.preventDefault();
 });
 
 /* ===== NAV SCROLL STATE ===== */
